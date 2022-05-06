@@ -1,7 +1,7 @@
 /* wwEditor:start */
 import './components/CollectionEdit.vue';
 import './components/CollectionSummary.vue';
-import './components/ApiRequest.vue';
+import './components/Request.vue';
 /* wwEditor:end */
 
 export default {
