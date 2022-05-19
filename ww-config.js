@@ -10,7 +10,7 @@ export default {
     },
     actions: [
         {
-            name: 'Request',
+            name: 'SOAP Request',
             code: 'request',
             isAsync: true,
             /* wwEditor:start */
