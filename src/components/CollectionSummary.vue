@@ -1,7 +1,6 @@
 <template>
     <div class="soap-collection-summary">
         <div class="soap-collection-summary__elem caption-s">URL: {{ config.url || '-' }}</div>
-        <div class="soap-collection-summary__elem caption-s">XML: {{ config.data || '-' }}</div>
     </div>
 </template>
 
