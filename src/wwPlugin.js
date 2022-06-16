@@ -42,13 +42,12 @@ export default {
         if (isThroughServer) {
             const websiteId = wwLib.wwWebsiteData.getInfo().id;
             const pluginURL = wwLib.wwApiRequests._getPluginsUrl();
-            return await this.parseXML(
-                await axios.post(`${pluginURL}/designs/${websiteId}/soap/request`, {
-                    url,
-                    data,
-                    headers,
-                })
-            );
+            const response = await axios.post(`${pluginURL}/designs/${websiteId}/soap/request`, {
+                url,
+                data,
+                headers,
+            });
+            return await this.parseXML(response.data);
         } else {
             return await this._request(url, data, headers);
         }
