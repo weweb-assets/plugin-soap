@@ -3,7 +3,12 @@ import './components/CollectionEdit.vue';
 import './components/CollectionSummary.vue';
 import './components/Request.vue';
 /* wwEditor:end */
-
+import xml2js from 'xml2js';
+var parseString = require('xml2js').parseString;
+var xml = '<root>Hello xml2js!</root>';
+parseString(xml, function (err, result) {
+    console.dir(result);
+});
 export default {
     /*=============================================m_ÔÔ_m=============================================\
         Collection API
@@ -37,11 +42,13 @@ export default {
         if (isThroughServer) {
             const websiteId = wwLib.wwWebsiteData.getInfo().id;
             const pluginURL = wwLib.wwApiRequests._getPluginsUrl();
-            return await axios.post(`${pluginURL}/designs/${websiteId}/soap/request`, {
-                url,
-                data,
-                headers,
-            });
+            return await this.parseXML(
+                await axios.post(`${pluginURL}/designs/${websiteId}/soap/request`, {
+                    url,
+                    data,
+                    headers,
+                })
+            );
         } else {
             return await this._apiRequest(url, data, headers);
         }
@@ -56,7 +63,14 @@ export default {
             headers: payload.headers,
         });
 
-        return response.data;
+        return await this.parseXML(response.data);
+    },
+    async parseXML(xml) {
+        try {
+            return await xml2js.parseStringPromise(xml);
+        } catch (err) {
+            throw new Error('Invalid XML response format.');
+        }
     },
     /* wwEditor:start */
     getCollectionErrorDetails(collection) {
