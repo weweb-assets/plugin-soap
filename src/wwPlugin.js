@@ -17,7 +17,7 @@ export default {
         if (collection.mode === 'dynamic' && !collection.config.isThroughServer) {
             try {
                 const { url, data, headers, resultKey } = collection.config;
-                const responseData = await this._apiRequest(url, data, headers);
+                const responseData = await this._request(url, data, headers);
                 return { data: _.get(responseData, resultKey, responseData), error: null };
             } catch (err) {
                 return {
@@ -28,7 +28,7 @@ export default {
             return { data: null, error: null };
         }
     },
-    async apiRequest({ url, data, headers, isThroughServer }, wwUtils) {
+    async request({ url, data, headers, isThroughServer }, wwUtils) {
         /* wwEditor:start */
         const payload = computePayload(headers);
         if (wwUtils) {
@@ -50,10 +50,10 @@ export default {
                 })
             );
         } else {
-            return await this._apiRequest(url, data, headers);
+            return await this._request(url, data, headers);
         }
     },
-    async _apiRequest(url, data, headers) {
+    async _request(url, data, headers) {
         const payload = computePayload(headers);
 
         const response = await axios({
